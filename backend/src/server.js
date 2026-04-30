@@ -9,6 +9,7 @@ const start = async () => {
       console.log(`Server started on http://localhost:${env.port}`);
     });
   } catch (error) {
+    console.log("Bazinga")
     console.error('Failed to start server:', error);
     process.exit(1);
   }
