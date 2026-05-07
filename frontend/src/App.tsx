@@ -1,5 +1,11 @@
 import AppRouter from "./app/router/index";
+import Header from "./widgets/Header/Header";
 
 export default function App() {
-  return <AppRouter />;
+  return (
+    <>
+      <Header />
+      <AppRouter />
+    </>
+);
 }
