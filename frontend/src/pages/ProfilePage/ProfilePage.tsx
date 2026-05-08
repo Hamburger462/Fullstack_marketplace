@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { meRequest } from "../../features/auth/api/authApi";
-import { tokenStorage } from "../../shared/lib/tokenStorage";
+import { useAuthContext } from "../../shared/hooks/useAuthContext/useAuthContext";
 import type { User } from "../../entities/user/model/types";
 
 export default function ProfilePage() {
   const navigate = useNavigate();
+
+  const { deleteToken } = useAuthContext();
 
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -25,7 +27,7 @@ export default function ProfilePage() {
           "Failed to load profile"
       );
 
-      tokenStorage.remove();
+      deleteToken();
       navigate("/login");
     } finally {
       setLoading(false);
@@ -37,7 +39,7 @@ export default function ProfilePage() {
   }, []);
 
   const handleLogout = () => {
-    tokenStorage.remove();
+    deleteToken()
     navigate("/login");
   };
 

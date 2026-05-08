@@ -6,4 +6,5 @@ export type Product = {
     rubricId: string,
     images?: Array<string>,
     status?: string,
+    seller_id: string,
 }

@@ -15,7 +15,7 @@ export const getAllProducts = async (): Promise<Product[] | null> => {
 export const getProductById = async (id: string): Promise<Product | null> => {
     try{
         const response = await baseApi.get(`/items/${id}`);
-        return response.data;
+        return response.data.item;
     }
     catch(err){
         console.error(err);

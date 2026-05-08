@@ -1,94 +1,109 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginRequest } from "../../features/auth/api/authApi";
-import { tokenStorage } from "../../shared/lib/tokenStorage";
+import { useAuthContext } from "../../shared/hooks/useAuthContext/useAuthContext";
 
 export default function LoginPage() {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
+    const { setUser, setToken } = useAuthContext();
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+    const [form, setForm] = useState({
+        email: "",
+        password: "",
+    });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
+        setForm((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
 
-    try {
-      setLoading(true);
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setError("");
 
-      const data = await loginRequest({
-        email: form.email,
-        password: form.password,
-      });
+        try {
+            setLoading(true);
 
-      tokenStorage.set(data.token);
-      navigate("/profile");
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.message ||
-          err?.response?.data?.error ||
-          "Login failed"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+            const data = await loginRequest({
+                email: form.email,
+                password: form.password,
+            });
 
-  return (
-    <div style={{ maxWidth: "400px", margin: "40px auto" }}>
-      <h1>Login</h1>
+            setUser(data.user)
+            setToken(data.token);
+            navigate("/profile");
+        } catch (err: any) {
+            setError(
+                err?.response?.data?.message ||
+                    err?.response?.data?.error ||
+                    "Login failed",
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
 
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "12px" }}>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            placeholder="Enter email"
-            style={{ display: "block", width: "100%", padding: "8px" }}
-          />
+    return (
+        <div style={{ maxWidth: "400px", margin: "40px auto" }}>
+            <h1>Login</h1>
+
+            <form onSubmit={handleSubmit}>
+                <div style={{ marginBottom: "12px" }}>
+                    <label htmlFor="email">Email</label>
+                    <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={form.email}
+                        onChange={handleChange}
+                        placeholder="Enter email"
+                        style={{
+                            display: "block",
+                            width: "100%",
+                            padding: "8px",
+                        }}
+                    />
+                </div>
+
+                <div style={{ marginBottom: "12px" }}>
+                    <label htmlFor="password">Password</label>
+                    <input
+                        id="password"
+                        type="password"
+                        name="password"
+                        value={form.password}
+                        onChange={handleChange}
+                        placeholder="Enter password"
+                        style={{
+                            display: "block",
+                            width: "100%",
+                            padding: "8px",
+                        }}
+                    />
+                </div>
+
+                {error && <p style={{ color: "red" }}>{error}</p>}
+
+                <button
+                    type="submit"
+                    disabled={loading}
+                    style={{ padding: "10px 16px" }}
+                >
+                    {loading ? "Loading..." : "Login"}
+                </button>
+            </form>
+
+            <p style={{ marginTop: "16px" }}>
+                No account? <Link to="/register">Register</Link>
+            </p>
         </div>
-
-        <div style={{ marginBottom: "12px" }}>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            placeholder="Enter password"
-            style={{ display: "block", width: "100%", padding: "8px" }}
-          />
-        </div>
-
-        {error && <p style={{ color: "red" }}>{error}</p>}
-
-        <button type="submit" disabled={loading} style={{ padding: "10px 16px" }}>
-          {loading ? "Loading..." : "Login"}
-        </button>
-      </form>
-
-      <p style={{ marginTop: "16px" }}>
-        No account? <Link to="/register">Register</Link>
-      </p>
-    </div>
-  );
+    );
 }

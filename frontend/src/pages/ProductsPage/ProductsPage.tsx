@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { getAllProducts } from "../../features/product/productApi";
 
-import ProductCard from "../../widgets/ProductCard/ProductCard";
+import ProductGrid from "../../widgets/ProductGrid/ProductGrid";
 
 import type { Product } from "../../entities/product/model/types";
 
@@ -24,9 +24,7 @@ export default function ProductsPage() {
             {loading ? (
                 <div>Products are loading</div>
             ) : (
-                allProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                ))
+                <ProductGrid products={allProducts}/>
             )}
         </>
     );

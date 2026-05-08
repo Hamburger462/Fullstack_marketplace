@@ -13,26 +13,28 @@ export default function ProductDetailsPage() {
 
     useEffect(() => {
         const loadProduct = async () => {
-            const data = await getProductById(id as string);
-            setProduct(data);
+            try {
+                const response = await getProductById(id as string);
+                console.log(response)
+                setProduct(response);
+            } catch (err) {
+                console.error(err);
+            }
             setLoading(false);
+            console.log("Download complete");
         };
         loadProduct();
     }, []);
 
     return (
         <>
-            return (
-            <>
-                {loading ? (
-                    <div>Data is loading...</div>
-                ) : product == null ? (
-                    <div>Product not found</div>
-                ) : (
-                    <ProductCard product={product}></ProductCard>
-                )}
-            </>
-            );
+            {loading ? (
+                <div>Data is loading...</div>
+            ) : product == null ? (
+                <div>Product not found</div>
+            ) : (
+                <ProductCard product={product}></ProductCard>
+            )}
         </>
     );
 }
