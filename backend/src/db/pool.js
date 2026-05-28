@@ -3,7 +3,7 @@ import pg from 'pg';
 const { Pool } = pg;
 
 export const pool = new Pool({
-  connectionString: 'postgresql://postgres:1234@localhost:5432/marketplace_db'
+  connectionString: process.env.DATABASE_URL
 });
 
 pool.on('error', (err) => {

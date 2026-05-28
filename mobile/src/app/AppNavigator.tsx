@@ -4,18 +4,20 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import RegisterScreen from "../screens/auth/RegisterScreen";
 import LoginScreen from "@/screens/auth/LoginScreen";
 import ProfileScreen from "@/screens/auth/ProfileScreen";
+import ProductScreen from "@/screens/marketplace/ProductScreen";
 
 export type RootStackParamList = {
   Register: undefined;
   Login: undefined;
   Profile: undefined;
+  Product: undefined,
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="Register">
+    <Stack.Navigator initialRouteName="Product">
       
       <Stack.Screen
         name="Register"
@@ -33,6 +35,11 @@ export default function AppNavigator() {
       <Stack.Screen
         name="Profile"
         component={ProfileScreen}
+      />
+
+      <Stack.Screen
+        name="Product"
+        component={ProductScreen}
       />
     </Stack.Navigator>
   );
