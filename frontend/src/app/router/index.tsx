@@ -32,15 +32,17 @@ export default function AppRouter() {
                     <RoleProtectedRoute user_types={["seller", "admin"]} />
                 }
             >
-                <Route path="/seller/dashboard" element={<SellerDashboardPage />} />
+                <Route
+                    path="/seller/dashboard"
+                    element={<SellerDashboardPage />}
+                />
             </Route>
 
-            <Route
-                element={
-                    <RoleProtectedRoute user_types={["admin"]} />
-                }
-            >
-                <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+            <Route element={<RoleProtectedRoute user_types={["admin"]} />}>
+                <Route
+                    path="/admin/dashboard"
+                    element={<AdminDashboardPage />}
+                />
             </Route>
 
             <Route path="/access_denied" element={<AccessDeniedPage />} />

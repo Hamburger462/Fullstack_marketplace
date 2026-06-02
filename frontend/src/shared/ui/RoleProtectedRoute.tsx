@@ -15,13 +15,11 @@ export default function RoleProtectedRoute({
     const checkUser = async () => {
         try {
             const response = await meRequest();
-            for (const user_type in user_types) {
-                if (response.user.user_type == user_type) {
-                    return true;
-                } else {
-                    navigate("/access_denied");
-                    return false;
-                }
+            if(!user_types.includes(response.user.user_type)){
+                throw new Error("Access denied")
+            }
+            else{
+                return;
             }
         } catch (err) {
             console.error(err);

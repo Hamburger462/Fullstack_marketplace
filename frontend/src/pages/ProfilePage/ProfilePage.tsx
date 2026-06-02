@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { meRequest } from "../../features/auth/api/authApi";
 import { useAuthContext } from "../../shared/hooks/useAuthContext/useAuthContext";
-import type { User } from "../../entities/user/model/types";
 
 export default function ProfilePage() {
   const navigate = useNavigate();
 
-  const { deleteToken } = useAuthContext();
+  const { user, deleteToken } = useAuthContext();
 
-  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -18,8 +15,6 @@ export default function ProfilePage() {
       setLoading(true);
       setError("");
 
-      const data = await meRequest();
-      setUser(data.user);
     } catch (err: any) {
       setError(
         err?.response?.data?.message ||
