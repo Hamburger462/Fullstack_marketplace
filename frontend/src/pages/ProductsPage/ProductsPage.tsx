@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getAllProducts } from "../../features/product/productApi";
+import { getAllProducts } from "../../features/product/productAPI";
 
 import ProductGrid from "../../widgets/ProductGrid/ProductGrid";
 

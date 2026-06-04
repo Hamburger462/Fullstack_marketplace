@@ -4,14 +4,13 @@ import { type Product } from "../../entities/product/model/types";
 type ProductPayload = {
     rubricId: string;
     title: string;
-    description: string;
+    description?: string;
     price: number;
 };
 
 export const addProduct = async (payload: ProductPayload) => {
     try {
         const response = await baseApi.post("/items/", payload);
-        console.log(response);
         return response.data;
     } catch (err) {
         console.error(err);
@@ -22,6 +21,17 @@ export const addProduct = async (payload: ProductPayload) => {
 export const updateProduct = async (id: string, payload: ProductPayload) => {
     try{
         const response = await baseApi.patch(`/items/${id}`, payload);
+        return response.data;
+    }
+    catch(err){
+        console.error(err);
+        return null;
+    }
+}
+
+export const deleteProduct = async (id: string) => {
+    try{
+        const response = await baseApi.delete(`/items/${id}`);
         console.log(response);
         return response.data;
     }

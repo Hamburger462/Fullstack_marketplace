@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { getProductById } from "../../features/product/productApi";
+import { getProductById } from "../../features/product/productAPI";
 import { type Product } from "../../entities/product/model/types";
 import ProductCard from "../../widgets/ProductCard/ProductCard";
 
