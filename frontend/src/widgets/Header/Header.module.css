@@ -1,0 +1,142 @@
+.headerMain {
+    background-color: #ffffff;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+    padding: 0 32px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    gap: 24px;
+}
+
+/* Brand / logo */
+.brand {
+    font-size: 17px;
+    font-weight: 500;
+    color: #1a1a1a;
+    text-decoration: none;
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.brandIcon {
+    color: #534AB7;
+    font-size: 20px;
+}
+
+/* Nav links */
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.navLink {
+    font-size: 14px;
+    color: #666666;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.navLink:hover {
+    background: #f5f5f5;
+    color: #1a1a1a;
+}
+
+.navLinkActive {
+    color: #1a1a1a;
+    font-weight: 500;
+    background: #f5f5f5;
+}
+
+.navBadge {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: #EEEDFE;
+    color: #3C3489;
+    font-weight: 500;
+}
+
+/* Right-side actions */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.btnOutline {
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 0.5px solid rgba(0, 0, 0, 0.2);
+    background: transparent;
+    color: #1a1a1a;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s ease;
+}
+
+.btnOutline:hover {
+    background: #f5f5f5;
+}
+
+.btnPrimary {
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: none;
+    background: #534AB7;
+    color: #ffffff;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s ease;
+}
+
+.btnPrimary:hover {
+    background: #3C3489;
+}
+
+/* Avatar circle (logged-in state) */
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #EEEDFE;
+    border: 0.5px solid #AFA9EC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: #3C3489;
+    cursor: pointer;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.divider {
+    width: 0.5px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 0 4px;
+}

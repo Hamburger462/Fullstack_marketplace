@@ -1,0 +1,344 @@
+/* ─── Page wrapper ──────────────────────────────────────────── */
+.page {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    font-family: system-ui, sans-serif;
+}
+
+/* ─── Hero ──────────────────────────────────────────────────── */
+.hero {
+    padding: 72px 40px 64px;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+}
+
+.heroEyebrow {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #534AB7;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.heroTitle {
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.8px;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+}
+
+.heroTitleAccent {
+    color: #534AB7;
+}
+
+.heroSub {
+    font-size: 16px;
+    color: #666666;
+    line-height: 1.65;
+    max-width: 420px;
+    margin-bottom: 32px;
+}
+
+.heroActions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* ─── Hero visual grid ──────────────────────────────────────── */
+.heroVisual {
+    background: #f7f7f7;
+    border-radius: 16px;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.miniCard {
+    background: #ffffff;
+    border-radius: 10px;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    padding: 14px;
+}
+
+.miniCardImg {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+
+.miniCardName {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+}
+
+.miniCardPrice {
+    font-size: 12px;
+    color: #534AB7;
+    font-weight: 500;
+}
+
+/* ─── Stats row ─────────────────────────────────────────────── */
+.statsRow {
+    display: flex;
+    gap: 32px;
+    padding: 24px 40px;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.statNum {
+    font-size: 22px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.statLabel {
+    font-size: 12px;
+    color: #999999;
+}
+
+.statSep {
+    width: 0.5px;
+    background: rgba(0, 0, 0, 0.08);
+    align-self: stretch;
+}
+
+/* ─── Section ───────────────────────────────────────────────── */
+.section {
+    padding: 48px 40px;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.sectionTitle {
+    font-size: 20px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.sectionLink {
+    font-size: 13px;
+    color: #534AB7;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.sectionLink:hover {
+    text-decoration: underline;
+}
+
+/* ─── Product grid ──────────────────────────────────────────── */
+.productGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.productCard {
+    background: #ffffff;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+    text-decoration: none;
+    display: block;
+}
+
+.productCard:hover {
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.productImg {
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    background: #f7f7f7;
+}
+
+.productInfo {
+    padding: 12px;
+}
+
+.productName {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+.productMeta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.productPrice {
+    font-size: 14px;
+    font-weight: 500;
+    color: #534AB7;
+}
+
+.productRating {
+    font-size: 11px;
+    color: #999999;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+/* ─── Feature cards ─────────────────────────────────────────── */
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 0 40px 48px;
+}
+
+.featCard {
+    padding: 20px;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+}
+
+.featIcon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: #EEEDFE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    color: #534AB7;
+    font-size: 18px;
+}
+
+.featTitle {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+.featDesc {
+    font-size: 13px;
+    color: #666666;
+    line-height: 1.55;
+}
+
+/* ─── CTA band ──────────────────────────────────────────────── */
+.ctaBand {
+    margin: 0 40px 48px;
+    background: #534AB7;
+    border-radius: 16px;
+    padding: 36px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.ctaTitle {
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.ctaDesc {
+    font-size: 14px;
+    color: #AFA9EC;
+    line-height: 1.5;
+}
+
+/* ─── Buttons ───────────────────────────────────────────────── */
+.btnPrimary {
+    padding: 10px 22px;
+    background: #534AB7;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s ease;
+}
+
+.btnPrimary:hover {
+    background: #3C3489;
+}
+
+.btnOutline {
+    padding: 10px 22px;
+    background: transparent;
+    color: #1a1a1a;
+    border: 0.5px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s ease;
+}
+
+.btnOutline:hover {
+    background: #f5f5f5;
+}
+
+.btnWhite {
+    padding: 10px 22px;
+    background: #ffffff;
+    color: #534AB7;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    transition: background 0.15s ease;
+}
+
+.btnWhite:hover {
+    background: #EEEDFE;
+}

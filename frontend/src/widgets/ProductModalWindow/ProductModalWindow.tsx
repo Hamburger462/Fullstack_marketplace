@@ -29,7 +29,7 @@ export default function ProductModalWindow({
     const [price, setPrice] = useState<string>(
         product?.price?.toString() || "",
     );
-    const [productRubric, setProductRubric] = useState<string>(product?.rubricId || rubrics[0].id);
+    const [productRubric, setProductRubric] = useState<string>(product?.rubricId || rubrics[0]?.id || "");
 
     const timeoutTime = 200;
     const clickStartedOnBackdrop = useRef(false);

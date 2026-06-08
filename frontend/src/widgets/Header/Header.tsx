@@ -1,94 +1,115 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 import { meRequest } from "../../features/auth/api/authApi";
-
 import { useAuthContext } from "../../shared/hooks/useAuthContext/useAuthContext";
 
-import "./Header.css";
+import styles from "./Header.module.css";
 
 export default function Header() {
-    const { user, setUser ,token } = useAuthContext();
+    const { user, setUser, token } = useAuthContext();
+    const location = useLocation();
 
     useEffect(() => {
         const loadUser = async () => {
             const response = await meRequest();
             setUser(response.user);
-        }
-
+        };
         loadUser();
-    }, [])
+    }, []);
 
     useEffect(() => {
-        console.log(user?.user_type)
-    }, [user])
+        console.log(user?.user_type);
+    }, [user]);
+
+    const isActive = (path: string) =>
+        location.pathname === path ? styles.navLinkActive : "";
+
+    const getInitials = () => {
+        if (!user?.name) return "Me";
+        return user.name
+            .split(" ")
+            .map((n: string) => n[0])
+            .join("")
+            .toUpperCase()
+            .slice(0, 2);
+    };
+
+    const authActions = !token ? (
+        <>
+            <Link to="/login" className={styles.btnOutline}>Log in</Link>
+            <Link to="/register" className={styles.btnPrimary}>Register</Link>
+        </>
+    ) : (
+        <Link to="/profile" className={styles.avatar}>{getInitials()}</Link>
+    );
 
     const authorizeUser = () => {
         switch (user?.user_type) {
             case "seller":
                 return (
-                    <header>
-                        <Link to="/">Main</Link>
+                    <header className={styles.header}>
+                        <Link to="/" className={styles.brand}>
+                            <span className={styles.brandIcon}>⚡</span>
+                            Storefront
+                        </Link>
 
-                        <Link to="/items">Catalogue</Link>
+                        <nav className={styles.nav}>
+                            <Link to="/" className={`${styles.navLink} ${isActive("/")}`}>Main</Link>
+                            <Link to="/items" className={`${styles.navLink} ${isActive("/items")}`}>Catalogue</Link>
+                            <Link to="/seller/dashboard" className={`${styles.navLink} ${isActive("/seller/dashboard")}`}>
+                                Dashboard
+                            </Link>
+                        </nav>
 
-                        <Link to="/seller/dashboard">Seller Dashboard</Link>
-
-                        {!token ? (
-                            <>
-                                <Link to="/register">Register</Link>
-                                <Link to="/login">Login</Link>
-                            </>
-                        ) : (
-                            <Link to="/profile">Profile</Link>
-                        )}
+                        <div className={styles.actions}>{authActions}</div>
                     </header>
                 );
-                break;
+
             case "admin":
                 return (
-                    <header>
-                        <Link to="/">Main</Link>
+                    <header className={styles.header}>
+                        <Link to="/" className={styles.brand}>
+                            <span className={styles.brandIcon}>⚡</span>
+                            Storefront
+                        </Link>
 
-                        <Link to="/items">Catalogue</Link>
+                        <nav className={styles.nav}>
+                            <Link to="/" className={`${styles.navLink} ${isActive("/")}`}>Main</Link>
+                            <Link to="/items" className={`${styles.navLink} ${isActive("/items")}`}>Catalogue</Link>
+                            <Link to="/admin/dashboard" className={`${styles.navLink} ${isActive("/admin/dashboard")}`}>
+                                Admin
+                                <span className={styles.navBadge}>Admin</span>
+                            </Link>
+                            <Link to="/admin/users" className={`${styles.navLink} ${isActive("/admin/users")}`}>Users</Link>
+                            <Link to="/admin/analytics" className={`${styles.navLink} ${isActive("/admin/analytics")}`}>Analytics</Link>
+                        </nav>
 
-                        <Link to="">Admin Dashboard</Link>
-
-                        <Link to="">Users</Link>
-
-                        <Link to="">Analytics</Link>
-
-                        {!token ? (
-                            <>
-                                <Link to="/register">Register</Link>
-                                <Link to="/login">Login</Link>
-                            </>
-                        ) : (
-                            <Link to="/profile">Profile</Link>
-                        )}
+                        <div className={styles.actions}>
+                            <div className={styles.divider} />
+                            {authActions}
+                        </div>
                     </header>
                 );
-                break;
+
             default:
                 return (
-                    <header>
-                        <Link to="/">Main</Link>
+                    <header className={styles.header}>
+                        <Link to="/" className={styles.brand}>
+                            <span className={styles.brandIcon}>⚡</span>
+                            Storefront
+                        </Link>
 
-                        <Link to="/items">Catalogue</Link>
+                        <nav className={styles.nav}>
+                            <Link to="/" className={`${styles.navLink} ${isActive("/")}`}>Main</Link>
+                            <Link to="/items" className={`${styles.navLink} ${isActive("/items")}`}>Catalogue</Link>
+                        </nav>
 
-                        {!token ? (
-                            <>
-                                <Link to="/register">Register</Link>
-                                <Link to="/login">Login</Link>
-                            </>
-                        ) : (
-                            <Link to="/profile">Profile</Link>
-                        )}
+                        <div className={styles.actions}>{authActions}</div>
                     </header>
                 );
-                break;
         }
     };
 
-    return <div className="Header-main">{authorizeUser()}</div>;
+    return <div className={styles.headerMain}>{authorizeUser()}</div>;
 }
