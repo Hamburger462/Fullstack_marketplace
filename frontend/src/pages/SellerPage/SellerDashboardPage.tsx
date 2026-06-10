@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { useSearchParams } from "react-router-dom"; // Imported to handle search queries
 
 import { useAuthContext } from "../../shared/hooks/useAuthContext/useAuthContext";
 
@@ -65,6 +66,8 @@ const formatPrice = (n: number) =>
 
 export default function SellerDashboardPage() {
     const { user } = useAuthContext();
+    const [searchParams, setSearchParams] = useSearchParams(); // Destructure hooks to parse standard queries
+    
     const [userProducts, setUserProducts] = useState<Product[]>([]);
     const [allRubrics, setAllRubrics] = useState<Rubric[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -79,30 +82,45 @@ export default function SellerDashboardPage() {
                 getAllRubrics(),
             ]);
 
+            let filteredProducts: Product[] = [];
+
             if (productsData) {
-                setUserProducts(
-                    productsData.filter((p) => p.seller_id === user?.id),
-                );
+                filteredProducts = productsData.filter((p) => p.seller_id === user?.id);
+                setUserProducts(filteredProducts);
             }
 
             if (rubricsData) {
                 setAllRubrics(rubricsData.items);
             }
 
+            // Check if the URL contains an `item` query parameter (?item=XYZ)
+            const itemIdParam = searchParams.get("item");
+            if (itemIdParam && filteredProducts.length > 0) {
+                const matchedProduct = filteredProducts.find((p) => p.id === itemIdParam);
+                if (matchedProduct) {
+                    setCurrentProduct(matchedProduct);
+                    setModalOpen(true);
+                }
+            }
+
             setLoading(false);
         };
 
         loadData();
-    }, [user, isModalOpen]);
+    }, [user, isModalOpen, searchParams]); // Run when search params mutation vectors adjust
+
+    const handleCloseModal = (isOpen: boolean) => {
+        setModalOpen(isOpen);
+        // Clean up the URL search query string parameters when the modal closes
+        if (!isOpen && searchParams.has("item")) {
+            searchParams.delete("item");
+            setSearchParams(searchParams);
+        }
+    };
 
     const activeCount = userProducts.filter((p) => p.status === "active").length;
     const draftCount  = userProducts.filter((p) => p.status === "draft").length;
     const totalValue  = userProducts.reduce((sum, p) => sum + p.price, 0);
-
-    const handleEditClick = (product: Product) => {
-        setCurrentProduct(product);
-        setModalOpen(true);
-    };
 
     return (
         <>
@@ -146,7 +164,7 @@ export default function SellerDashboardPage() {
                                     <div className={styles.statLabel}>Drafts</div>
                                 </div>
                                 <div className={styles.statCard}>
-                                    <div className={styles.statNum}>{formatPrice(totalValue)}</div>
+                                    {/* <div className={styles.formatPrice(totalValue)}>{formatPrice(totalValue)}</div> */}
                                     <div className={styles.statLabel}>Total value listed</div>
                                 </div>
                             </div>
@@ -178,7 +196,7 @@ export default function SellerDashboardPage() {
                     <ProductModalWindow
                         product={currentProduct}
                         rubrics={allRubrics}
-                        setModalOpen={setModalOpen}
+                        setModalOpen={handleCloseModal} // Uses modified handler to wipe parameters cleanly on backdrop exit
                     />,
                     document.body,
                 )}

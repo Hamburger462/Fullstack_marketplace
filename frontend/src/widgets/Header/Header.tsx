@@ -57,6 +57,7 @@ export default function Header() {
                         <nav className={styles.nav}>
                             <Link to="/" className={`${styles.navLink} ${isActive("/")}`}>Main</Link>
                             <Link to="/items" className={`${styles.navLink} ${isActive("/items")}`}>Catalogue</Link>
+                            <Link to="/cart" className={`${styles.navLink} ${isActive("/cart")}`}>Cart</Link>
                             <Link to="/seller/dashboard" className={`${styles.navLink} ${isActive("/seller/dashboard")}`}>
                                 Dashboard
                             </Link>
@@ -77,6 +78,7 @@ export default function Header() {
                         <nav className={styles.nav}>
                             <Link to="/" className={`${styles.navLink} ${isActive("/")}`}>Main</Link>
                             <Link to="/items" className={`${styles.navLink} ${isActive("/items")}`}>Catalogue</Link>
+                            <Link to="/cart" className={`${styles.navLink} ${isActive("/cart")}`}>Cart</Link>
                             <Link to="/admin/dashboard" className={`${styles.navLink} ${isActive("/admin/dashboard")}`}>
                                 Admin
                                 <span className={styles.navBadge}>Admin</span>
@@ -103,6 +105,7 @@ export default function Header() {
                         <nav className={styles.nav}>
                             <Link to="/" className={`${styles.navLink} ${isActive("/")}`}>Main</Link>
                             <Link to="/items" className={`${styles.navLink} ${isActive("/items")}`}>Catalogue</Link>
+                            <Link to="/cart" className={`${styles.navLink} ${isActive("/cart")}`}>Cart</Link>
                         </nav>
 
                         <div className={styles.actions}>{authActions}</div>

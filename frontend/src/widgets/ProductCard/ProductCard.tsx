@@ -44,7 +44,7 @@ export default function ProductCard({ product }: { product: Product }) {
                 </div>
                 <button
                     className={styles.btnCart}
-                    onClick={() => navigate(`/items/${product.id}`)}
+                    onClick={() => navigate(`/item/${product.id}`)}
                 >
                     <i className="ti ti-shopping-cart" aria-hidden="true" />
                     Add

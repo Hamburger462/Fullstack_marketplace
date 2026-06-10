@@ -5,6 +5,7 @@ import { getProductById } from "../../features/product/productAPI";
 import { deleteProduct } from "../../features/product/productAPI";
 import { type Product } from "../../entities/product/model/types";
 import { useAuthContext } from "../../shared/hooks/useAuthContext/useAuthContext";
+import { addProductToCart, updateProduct, getUserCart } from "../../features/cart/cartAPI";
 
 import styles from "./ProductDetailsPage.module.css";
 
@@ -80,6 +81,10 @@ export default function ProductDetailsPage() {
     const [product, setProduct] = useState<Product | null>(null);
     const [activeImg, setActiveImg] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
+    
+    // Quantity and loading states for cart actions
+    const [quantity, setQuantity] = useState<number>(1);
+    const [isAdding, setIsAdding] = useState<boolean>(false);
 
     useEffect(() => {
         const loadProduct = async () => {
@@ -99,6 +104,42 @@ export default function ProductDetailsPage() {
         if (confirm("Are you sure you want to delete this product?")) {
             await deleteProduct(product.id);
             navigate("/items");
+        }
+    };
+
+    const handleAddToCart = async () => {
+        if (!product) return;
+        setIsAdding(true);
+        try {
+            // 1. Fetch current cart to see if product already exists
+            const cartItems = await getUserCart();
+            
+            const existingItem = Array.isArray(cartItems)
+                ? cartItems.find((item: any) => item.item_id === product.id)
+                : null;
+
+            console.log(existingItem)
+
+            if (existingItem) {
+                // 2. If it exists, update the quantity (add chosen quantity to current quantity)
+                if(!cartItems) return;
+                await updateProduct(existingItem.item_id, {
+                    quantity: existingItem.quantity + quantity,
+                });
+            } else {
+                // 3. If it doesn't exist, add it to the cart
+                console.log("Fuckup starts here")
+                await addProductToCart({
+                    itemId: product.id,
+                    quantity: quantity,
+                });
+            }
+            alert("Product added to cart successfully!");
+        } catch (err) {
+            console.error("Failed to update cart:", err);
+            alert("An error occurred while adding the product to the cart.");
+        } finally {
+            setIsAdding(false);
         }
     };
 
@@ -210,9 +251,48 @@ export default function ProductDetailsPage() {
 
                         {/* Actions */}
                         <div className={styles.actions}>
-                            <button className={styles.btnCart}>
+                            {/* Quantity Controls Selector */}
+                            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginRight: "12px" }}>
+                                <button
+                                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                                    disabled={quantity <= 1 || product.status?.toLowerCase() === "sold"}
+                                    style={{
+                                        padding: "6px 12px",
+                                        border: "1px solid #ddd",
+                                        background: "#fff",
+                                        cursor: "pointer",
+                                        borderRadius: "4px",
+                                        fontWeight: "bold"
+                                    }}
+                                >
+                                    -
+                                </button>
+                                <span style={{ minWidth: "24px", textAlign: "center", fontWeight: "600" }}>
+                                    {quantity}
+                                </span>
+                                <button
+                                    onClick={() => setQuantity((q) => q + 1)}
+                                    disabled={product.status?.toLowerCase() === "sold"}
+                                    style={{
+                                        padding: "6px 12px",
+                                        border: "1px solid #ddd",
+                                        background: "#fff",
+                                        cursor: "pointer",
+                                        borderRadius: "4px",
+                                        fontWeight: "bold"
+                                    }}
+                                >
+                                    +
+                                </button>
+                            </div>
+
+                            <button 
+                                className={styles.btnCart}
+                                onClick={handleAddToCart}
+                                disabled={isAdding || product.status?.toLowerCase() === "sold"}
+                            >
                                 <i className="ti ti-shopping-cart" style={{ fontSize: 15 }} aria-hidden="true" />
-                                Add to cart
+                                {isAdding ? "Adding..." : "Add to cart"}
                             </button>
 
                             {isOwner && (

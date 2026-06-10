@@ -7,6 +7,7 @@ import ProductsPage from "../../pages/ProductsPage/ProductsPage";
 import ProductDetailsPage from "../../pages/ProductDetails/ProductDetailsPage";
 import SellerDashboardPage from "../../pages/SellerPage/SellerDashboardPage";
 import AdminDashboardPage from "../../pages/AdminDashboardPage/AdminDashboardPage";
+import CartPage from "../../pages/CartPage/CartPage";
 
 import ProtectedRoute from "../../shared/ui/ProtectedRoute";
 import RoleProtectedRoute from "../../shared/ui/RoleProtectedRoute";
@@ -26,6 +27,8 @@ export default function AppRouter() {
 
             <Route path="/items" element={<ProductsPage />} />
             <Route path="/item/:id" element={<ProductDetailsPage />} />
+
+            <Route path="/cart" element={<CartPage />} />
 
             <Route
                 element={
