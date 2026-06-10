@@ -1,0 +1,200 @@
+/* ─── Page shell ────────────────────────────────────────────── */
+.page {
+    padding: 40px;
+    background: #ffffff;
+    min-height: 100vh;
+}
+
+/* ─── Header ────────────────────────────────────────────────── */
+.pageHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    gap: 16px;
+}
+
+.pageTitle {
+    font-size: 24px;
+    font-weight: 500;
+    color: #1a1a1a;
+    letter-spacing: -0.4px;
+    margin-bottom: 6px;
+}
+
+.pageSub {
+    font-size: 14px;
+    color: #999999;
+}
+
+.btnCreate {
+    font-size: 13px;
+    padding: 9px 18px;
+    background: #534AB7;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.btnCreate:hover {
+    background: #3C3489;
+}
+
+/* ─── Stats row ─────────────────────────────────────────────── */
+.statsRow {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.statCard {
+    flex: 1;
+    padding: 16px 20px;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+}
+
+.statNum {
+    font-size: 22px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+}
+
+.statLabel {
+    font-size: 12px;
+    color: #999999;
+}
+
+/* ─── Section title ─────────────────────────────────────────── */
+.sectionTitle {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+}
+
+/* ─── Product grid ──────────────────────────────────────────── */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+/* ─── Skeleton ──────────────────────────────────────────────── */
+.skel {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 25%,
+        #e4e4e4 50%,
+        #f0f0f0 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 6px;
+}
+
+@keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skelGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.skelCard {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 0.5px solid rgba(0, 0, 0, 0.06);
+}
+
+.skelImg {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+}
+
+.skelBody {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skelTitle {
+    height: 13px;
+    width: 70%;
+}
+
+.skelDescFull {
+    height: 11px;
+    width: 100%;
+}
+
+.skelDescShort {
+    height: 11px;
+    width: 55%;
+}
+
+.skelFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+
+.skelPrice {
+    height: 15px;
+    width: 40px;
+}
+
+.skelActions {
+    border-top: 0.5px solid rgba(0, 0, 0, 0.06);
+    padding: 10px 14px;
+    display: flex;
+    gap: 8px;
+}
+
+.skelBtn {
+    height: 28px;
+    width: 64px;
+    border-radius: 6px;
+}
+
+/* ─── Empty state ───────────────────────────────────────────── */
+.empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 56px 24px;
+    border: 0.5px dashed rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+}
+
+.emptyIcon {
+    font-size: 36px;
+    color: #cccccc;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.emptyTitle {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+.emptyDesc {
+    font-size: 13px;
+    color: #999999;
+    margin-bottom: 20px;
+}

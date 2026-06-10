@@ -1,0 +1,116 @@
+/* ─── Page shell ────────────────────────────────────────────── */
+.page {
+    padding: 40px;
+    background: #ffffff;
+    /* max-height: 100vh; */
+}
+
+.pageHeader {
+    margin-bottom: 32px;
+}
+
+.pageTitle {
+    font-size: 24px;
+    font-weight: 500;
+    color: #1a1a1a;
+    letter-spacing: -0.4px;
+    margin-bottom: 6px;
+}
+
+.pageSub {
+    font-size: 14px;
+    color: #999999;
+}
+
+/* ─── Skeleton shimmer ──────────────────────────────────────── */
+.skel {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 25%,
+        #e4e4e4 50%,
+        #f0f0f0 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 6px;
+}
+
+@keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skelToolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.skelText {
+    height: 14px;
+    width: 80px;
+}
+
+.skelSelect {
+    height: 30px;
+    width: 140px;
+    border-radius: 8px;
+}
+
+.skelGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.skelCard {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 0.5px solid rgba(0, 0, 0, 0.06);
+}
+
+.skelImg {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+}
+
+.skelBody {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skelTitle {
+    height: 13px;
+    width: 70%;
+}
+
+.skelDescFull {
+    height: 11px;
+    width: 100%;
+}
+
+.skelDescShort {
+    height: 11px;
+    width: 60%;
+}
+
+.skelFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+
+.skelPrice {
+    height: 15px;
+    width: 40px;
+}
+
+.skelBtn {
+    height: 28px;
+    width: 80px;
+    border-radius: 6px;
+}

@@ -1,0 +1,190 @@
+/* ─── Page shell ────────────────────────────────────────────── */
+.page {
+    /* max-height: 100vh; */
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.card {
+    width: 100%;
+    max-width: 420px;
+}
+
+/* ─── Brand header ──────────────────────────────────────────── */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 17px;
+    font-weight: 500;
+    color: #1a1a1a;
+    text-decoration: none;
+    letter-spacing: -0.3px;
+    margin-bottom: 32px;
+}
+
+.brandIcon {
+    color: #534AB7;
+    font-size: 20px;
+}
+
+.heading {
+    font-size: 22px;
+    font-weight: 500;
+    color: #1a1a1a;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+}
+
+.subheading {
+    font-size: 14px;
+    color: #999999;
+    margin-bottom: 28px;
+}
+
+/* ─── Form layout ───────────────────────────────────────────── */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.labelOptional {
+    font-size: 11px;
+    color: #999999;
+    font-weight: 400;
+    margin-left: 4px;
+}
+
+.input {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 14px;
+    color: #1a1a1a;
+    background: #ffffff;
+    border: 0.5px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    box-sizing: border-box;
+}
+
+.input::placeholder {
+    color: #cccccc;
+}
+
+.input:focus {
+    border-color: #534AB7;
+    box-shadow: 0 0 0 3px rgba(83, 74, 183, 0.1);
+}
+
+.select {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 14px;
+    color: #1a1a1a;
+    background: #ffffff;
+    border: 0.5px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    box-sizing: border-box;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+
+.select:focus {
+    border-color: #534AB7;
+    box-shadow: 0 0 0 3px rgba(83, 74, 183, 0.1);
+}
+
+/* ─── Error banner ──────────────────────────────────────────── */
+.error {
+    font-size: 13px;
+    color: #A32D2D;
+    background: #FCEBEB;
+    border: 0.5px solid #F09595;
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+/* ─── Submit button ─────────────────────────────────────────── */
+.btnSubmit {
+    width: 100%;
+    padding: 11px;
+    background: #534AB7;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background 0.15s ease;
+    margin-top: 4px;
+}
+
+.btnSubmit:hover:not(:disabled) {
+    background: #3C3489;
+}
+
+.btnSubmit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ─── Footer link ───────────────────────────────────────────── */
+.footer {
+    font-size: 13px;
+    color: #999999;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footerLink {
+    color: #534AB7;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footerLink:hover {
+    text-decoration: underline;
+}
+
+/* ─── Divider ───────────────────────────────────────────────── */
+.divider {
+    height: 0.5px;
+    background: rgba(0, 0, 0, 0.08);
+    margin: 4px 0;
+}

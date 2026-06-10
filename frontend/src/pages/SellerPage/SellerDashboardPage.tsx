@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
-import { useSearchParams } from "react-router-dom";
-
 import { useAuthContext } from "../../shared/hooks/useAuthContext/useAuthContext";
 
 import { getAllProducts } from "../../features/product/productAPI";
@@ -14,6 +12,57 @@ import { type Rubric } from "../../entities/rubric/model/types";
 import ProductCard from "../../widgets/ProductCard/ProductCard";
 import ProductModalWindow from "../../widgets/ProductModalWindow/ProductModalWindow";
 
+import styles from "./SellerDashboardPage.module.css";
+
+const SKELETON_COUNT = 3;
+
+function DashboardSkeleton() {
+    return (
+        <div className={styles.skelGrid}>
+            {Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+                <div key={i} className={styles.skelCard}>
+                    <div className={`${styles.skel} ${styles.skelImg}`} />
+                    <div className={styles.skelBody}>
+                        <div className={`${styles.skel} ${styles.skelTitle}`} />
+                        <div className={`${styles.skel} ${styles.skelDescFull}`} />
+                        <div className={`${styles.skel} ${styles.skelDescShort}`} />
+                        <div className={styles.skelFooter}>
+                            <div className={`${styles.skel} ${styles.skelPrice}`} />
+                        </div>
+                    </div>
+                    <div className={styles.skelActions}>
+                        <div className={`${styles.skel} ${styles.skelBtn}`} />
+                        <div className={`${styles.skel} ${styles.skelBtn}`} />
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+function EmptyState({ onCreateClick }: { onCreateClick: () => void }) {
+    return (
+        <div className={styles.empty}>
+            <i className={`ti ti-package-off ${styles.emptyIcon}`} aria-hidden="true" />
+            <p className={styles.emptyTitle}>No listings yet</p>
+            <p className={styles.emptyDesc}>
+                Create your first product and start selling today.
+            </p>
+            <button className={styles.btnCreate} onClick={onCreateClick}>
+                <i className="ti ti-plus" style={{ fontSize: 14 }} aria-hidden="true" />
+                Create product
+            </button>
+        </div>
+    );
+}
+
+const formatPrice = (n: number) =>
+    new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 0,
+    }).format(n);
+
 export default function SellerDashboardPage() {
     const { user } = useAuthContext();
     const [userProducts, setUserProducts] = useState<Product[]>([]);
@@ -24,44 +73,106 @@ export default function SellerDashboardPage() {
     const [currentProduct, setCurrentProduct] = useState<Product | undefined>();
 
     useEffect(() => {
-        const loadProduct = async () => {
-            const data = await getAllProducts();
-            if (!data) return;
-            setUserProducts(
-                data.filter((product) => product.seller_id == user?.id),
-            );
+        const loadData = async () => {
+            const [productsData, rubricsData] = await Promise.all([
+                getAllProducts(),
+                getAllRubrics(),
+            ]);
+
+            if (productsData) {
+                setUserProducts(
+                    productsData.filter((p) => p.seller_id === user?.id),
+                );
+            }
+
+            if (rubricsData) {
+                setAllRubrics(rubricsData.items);
+            }
 
             setLoading(false);
         };
-        loadProduct();
 
-        const loadRubric = async () => {
-            const data = await getAllRubrics();
-            if (!data) return;
-            setAllRubrics(data.items);
-            setLoading(false);
-        };
-        loadRubric();
+        loadData();
     }, [user, isModalOpen]);
+
+    const activeCount = userProducts.filter((p) => p.status === "active").length;
+    const draftCount  = userProducts.filter((p) => p.status === "draft").length;
+    const totalValue  = userProducts.reduce((sum, p) => sum + p.price, 0);
+
+    const handleEditClick = (product: Product) => {
+        setCurrentProduct(product);
+        setModalOpen(true);
+    };
 
     return (
         <>
-            {loading ? (
-                <div>Loading...</div>
-            ) : (
-                <div className="SellerDashboard-main">
-                    <h1>Seller dashboard</h1>
-                    <div>Here the seller can manage their own items</div>
-                    {userProducts.map((product) => (
-                        <ProductCard product={product} key={product.id} />
-                    ))}
+            <div className={styles.page}>
+
+                {/* ── Header ── */}
+                <div className={styles.pageHeader}>
                     <div>
-                        <button onClick={() => setModalOpen(true)}>
-                            Create product
-                        </button>
+                        <h1 className={styles.pageTitle}>Seller dashboard</h1>
+                        <p className={styles.pageSub}>Manage your listed products</p>
                     </div>
+                    <button
+                        className={styles.btnCreate}
+                        onClick={() => {
+                            setCurrentProduct(undefined);
+                            setModalOpen(true);
+                        }}
+                    >
+                        <i className="ti ti-plus" style={{ fontSize: 14 }} aria-hidden="true" />
+                        Create product
+                    </button>
                 </div>
-            )}
+
+                {loading ? (
+                    <DashboardSkeleton />
+                ) : (
+                    <>
+                        {/* ── Stats ── */}
+                        {userProducts.length > 0 && (
+                            <div className={styles.statsRow}>
+                                <div className={styles.statCard}>
+                                    <div className={styles.statNum}>{userProducts.length}</div>
+                                    <div className={styles.statLabel}>Total listings</div>
+                                </div>
+                                <div className={styles.statCard}>
+                                    <div className={styles.statNum}>{activeCount}</div>
+                                    <div className={styles.statLabel}>Active</div>
+                                </div>
+                                <div className={styles.statCard}>
+                                    <div className={styles.statNum}>{draftCount}</div>
+                                    <div className={styles.statLabel}>Drafts</div>
+                                </div>
+                                <div className={styles.statCard}>
+                                    <div className={styles.statNum}>{formatPrice(totalValue)}</div>
+                                    <div className={styles.statLabel}>Total value listed</div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* ── Grid ── */}
+                        {userProducts.length === 0 ? (
+                            <EmptyState onCreateClick={() => setModalOpen(true)} />
+                        ) : (
+                            <>
+                                <p className={styles.sectionTitle}>Your listings</p>
+                                <div className={styles.grid}>
+                                    {userProducts.map((product) => (
+                                        <ProductCard
+                                            key={product.id}
+                                            product={product}
+                                        />
+                                    ))}
+                                </div>
+                            </>
+                        )}
+                    </>
+                )}
+            </div>
+
+            {/* ── Modal portal ── */}
             {isModalOpen &&
                 createPortal(
                     <ProductModalWindow

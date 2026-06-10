@@ -1,0 +1,391 @@
+/* ─── Page shell ────────────────────────────────────────────── */
+.page {
+    padding: 40px;
+    background: #ffffff;
+    min-height: 100vh;
+}
+
+/* ─── Breadcrumb ────────────────────────────────────────────── */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #999999;
+    margin-bottom: 28px;
+}
+
+.breadcrumbLink {
+    color: #999999;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.breadcrumbLink:hover {
+    color: #1a1a1a;
+}
+
+.breadcrumbSep {
+    font-size: 10px;
+}
+
+/* ─── Two-column layout ─────────────────────────────────────── */
+.layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* ─── Gallery ───────────────────────────────────────────────── */
+.mainImg {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 14px;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    background: #EEEDFE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    color: #534AB7;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.mainImgPhoto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.noImgIcon {
+    font-size: 56px;
+    color: #cccccc;
+}
+
+.thumbs {
+    display: flex;
+    gap: 8px;
+}
+
+.thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+    flex-shrink: 0;
+}
+
+.thumbActive {
+    border-color: #534AB7;
+}
+
+.thumbImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ─── Info panel ────────────────────────────────────────────── */
+.statusBadge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 999px;
+    display: inline-block;
+    margin-bottom: 14px;
+}
+
+.statusActive { background: #E1F5EE; color: #085041; }
+.statusDraft  { background: #F1EFE8; color: #444441; }
+.statusSold   { background: #FCEBEB; color: #A32D2D; }
+
+.productTitle {
+    font-size: 26px;
+    font-weight: 500;
+    color: #1a1a1a;
+    letter-spacing: -0.4px;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.productPrice {
+    font-size: 28px;
+    font-weight: 500;
+    color: #534AB7;
+    margin-bottom: 16px;
+}
+
+.divider {
+    height: 0.5px;
+    background: rgba(0, 0, 0, 0.08);
+    margin: 16px 0;
+}
+
+.descTitle {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+.descText {
+    font-size: 14px;
+    color: #666666;
+    line-height: 1.65;
+}
+
+/* ─── Seller row ────────────────────────────────────────────── */
+.sellerRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    margin-top: 8px;
+}
+
+.sellerAvatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #EEEDFE;
+    border: 0.5px solid #AFA9EC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: #3C3489;
+    flex-shrink: 0;
+}
+
+.sellerName {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.sellerLabel {
+    font-size: 11px;
+    color: #999999;
+}
+
+/* ─── Actions ───────────────────────────────────────────────── */
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.btnCart {
+    padding: 12px 20px;
+    background: #534AB7;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background 0.15s ease;
+}
+
+.btnCart:hover {
+    background: #3C3489;
+}
+
+.ownerActions {
+    display: flex;
+    gap: 8px;
+}
+
+.btnEdit {
+    flex: 1;
+    padding: 9px 16px;
+    background: transparent;
+    border: 0.5px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    font-size: 13px;
+    color: #1a1a1a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background 0.15s ease;
+}
+
+.btnEdit:hover {
+    background: #f5f5f5;
+}
+
+.btnDelete {
+    flex: 1;
+    padding: 9px 16px;
+    background: transparent;
+    border: 0.5px solid #F09595;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #A32D2D;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background 0.15s ease;
+}
+
+.btnDelete:hover {
+    background: #FCEBEB;
+}
+
+/* ─── Skeleton ──────────────────────────────────────────────── */
+.skel {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 25%,
+        #e4e4e4 50%,
+        #f0f0f0 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 6px;
+}
+
+@keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skelLayout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.skelMainImg {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 14px;
+    margin-bottom: 10px;
+}
+
+.skelThumbs {
+    display: flex;
+    gap: 8px;
+}
+
+.skelThumb {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+}
+
+.skelBadge {
+    height: 22px;
+    width: 64px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+}
+
+.skelTitle {
+    height: 28px;
+    width: 80%;
+    margin-bottom: 10px;
+}
+
+.skelPrice {
+    height: 32px;
+    width: 100px;
+    margin-bottom: 16px;
+}
+
+.skelDivider {
+    height: 0.5px;
+    background: rgba(0, 0, 0, 0.06);
+    margin: 16px 0;
+}
+
+.skelDescTitle {
+    height: 13px;
+    width: 100px;
+    margin-bottom: 8px;
+}
+
+.skelDescLine {
+    height: 12px;
+    margin-bottom: 6px;
+}
+
+.skelDescShort {
+    width: 65%;
+}
+
+.skelDescFull {
+    width: 100%;
+}
+
+.skelBtn {
+    height: 44px;
+    border-radius: 8px;
+    margin-top: 24px;
+}
+
+/* ─── Not found ─────────────────────────────────────────────── */
+.notFound {
+    text-align: center;
+    padding: 80px 24px;
+}
+
+.notFoundIcon {
+    font-size: 40px;
+    color: #cccccc;
+    display: block;
+    margin-bottom: 14px;
+}
+
+.notFoundTitle {
+    font-size: 18px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.notFoundDesc {
+    font-size: 14px;
+    color: #999999;
+    margin-bottom: 24px;
+}
+
+.btnBack {
+    padding: 9px 18px;
+    background: #534AB7;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+
+.btnBack:hover {
+    background: #3C3489;
+}

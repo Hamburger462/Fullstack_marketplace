@@ -1,88 +1,185 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { useAuthContext } from "../../shared/hooks/useAuthContext/useAuthContext";
 
-export default function ProfilePage() {
-  const navigate = useNavigate();
+import styles from "./ProfilePage.module.css";
 
-  const { user, deleteToken } = useAuthContext();
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  const loadProfile = async () => {
-    try {
-      setLoading(true);
-      setError("");
-
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.message ||
-          err?.response?.data?.error ||
-          "Failed to load profile"
-      );
-
-      deleteToken();
-      navigate("/login");
-    } finally {
-      setLoading(false);
+function getInitials(user: { first_name?: string; last_name?: string; username?: string }): string {
+    if (user.first_name && user.last_name) {
+        return `${user.first_name[0]}${user.last_name[0]}`.toUpperCase();
     }
-  };
+    if (user.username) return user.username.slice(0, 2).toUpperCase();
+    return "?";
+}
 
-  useEffect(() => {
-    loadProfile();
-  }, []);
+function ProfileSkeleton() {
+    return (
+        <div className={styles.inner}>
+            <div className={styles.skelHeaderCard}>
+                <div className={`${styles.skel} ${styles.skelAvatar}`} />
+                <div className={styles.skelHeaderLines}>
+                    <div className={`${styles.skel} ${styles.skelName}`} />
+                    <div className={`${styles.skel} ${styles.skelUname}`} />
+                    <div className={`${styles.skel} ${styles.skelEmail}`} />
+                </div>
+            </div>
 
-  const handleLogout = () => {
-    deleteToken()
-    navigate("/login");
-  };
+            <div className={styles.skelInfoCard}>
+                <div className={`${styles.skel} ${styles.skelInfoTitle}`} />
+                {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className={styles.skelRow}>
+                        <div className={`${styles.skel} ${styles.skelRowIcon}`} />
+                        <div className={`${styles.skel} ${styles.skelRowLabel}`} />
+                        <div className={`${styles.skel} ${styles.skelRowValue}`} />
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
 
-  if (loading) {
-    return <p style={{ padding: "20px" }}>Loading profile...</p>;
-  }
+type InfoRowProps = {
+    icon: string;
+    label: string;
+    value?: string | null;
+};
 
-  if (error) {
-    return <p style={{ padding: "20px", color: "red" }}>{error}</p>;
-  }
+function InfoRow({ icon, label, value }: InfoRowProps) {
+    return (
+        <div className={styles.row}>
+            <span className={styles.rowIcon}>
+                <i className={`ti ${icon}`} aria-hidden="true" />
+            </span>
+            <span className={styles.rowLabel}>{label}</span>
+            <span className={`${styles.rowValue} ${!value ? styles.rowValueMuted : ""}`}>
+                {value || "—"}
+            </span>
+        </div>
+    );
+}
 
-  if (!user) {
-    return <p style={{ padding: "20px" }}>No user data</p>;
-  }
+export default function ProfilePage() {
+    const navigate = useNavigate();
+    const { user, deleteToken } = useAuthContext();
 
-  return (
-    <div style={{ maxWidth: "600px", margin: "40px auto" }}>
-      <h1>Profile</h1>
+    const [loading, setLoading] = useState(true);
+    const [error, setError]     = useState("");
 
-      {user.avatar && (
-        <img
-          src={user.avatar}
-          alt="avatar"
-          style={{
-            width: "120px",
-            height: "120px",
-            objectFit: "cover",
-            borderRadius: "50%",
-            marginBottom: "16px",
-          }}
-        />
-      )}
+    const loadProfile = async () => {
+        try {
+            setLoading(true);
+            setError("");
+        } catch (err: any) {
+            setError(
+                err?.response?.data?.message ||
+                err?.response?.data?.error ||
+                "Failed to load profile"
+            );
+            deleteToken();
+            navigate("/login");
+        } finally {
+            setLoading(false);
+        }
+    };
 
-      <p><strong>ID:</strong> {user.id}</p>
-      <p><strong>Email:</strong> {user.email}</p>
-      <p><strong>Username:</strong> {user.username}</p>
-      <p><strong>First name:</strong> {user.first_name || "-"}</p>
-      <p><strong>Last name:</strong> {user.last_name || "-"}</p>
-      <p><strong>Phone:</strong> {user.phone || "-"}</p>
-      <p><strong>User type:</strong> {user.user_type}</p>
-      <p><strong>Created date:</strong> {user.created_date}</p>
+    useEffect(() => {
+        loadProfile();
+    }, []);
 
-      <button
-        onClick={handleLogout}
-        style={{ marginTop: "20px", padding: "10px 16px" }}
-      >
-        Logout
-      </button>
-    </div>
-  );
+    const handleLogout = () => {
+        deleteToken();
+        navigate("/login");
+    };
+
+    const displayName =
+        user?.first_name && user?.last_name
+            ? `${user.first_name} ${user.last_name}`
+            : user?.username ?? "";
+
+    if (loading) return (
+        <div className={styles.page}>
+            <ProfileSkeleton />
+        </div>
+    );
+
+    if (error) return (
+        <div className={styles.page}>
+            <div className={styles.inner}>
+                <p style={{ color: "#A32D2D", fontSize: 14 }}>{error}</p>
+            </div>
+        </div>
+    );
+
+    if (!user) return (
+        <div className={styles.page}>
+            <div className={styles.inner}>
+                <p style={{ fontSize: 14, color: "#999" }}>No user data available.</p>
+            </div>
+        </div>
+    );
+
+    return (
+        <div className={styles.page}>
+            <div className={styles.inner}>
+
+                {/* ── Header card ── */}
+                <div className={styles.headerCard}>
+                    <div className={styles.avatarWrap}>
+                        {user.avatar ? (
+                            <img
+                                src={user.avatar}
+                                alt="Avatar"
+                                className={styles.avatar}
+                            />
+                        ) : (
+                            <div className={styles.avatarFallback}>
+                                {getInitials(user)}
+                            </div>
+                        )}
+                        {user.user_type && (
+                            <span className={styles.userTypeBadge}>
+                                {user.user_type}
+                            </span>
+                        )}
+                    </div>
+
+                    <div className={styles.headerInfo}>
+                        <div className={styles.displayName}>{displayName}</div>
+                        {user.username && (
+                            <div className={styles.username}>@{user.username}</div>
+                        )}
+                        <div className={styles.email}>
+                            <i className="ti ti-mail" style={{ fontSize: 13 }} aria-hidden="true" />
+                            {user.email}
+                        </div>
+                    </div>
+
+                    <button className={styles.btnLogout} onClick={handleLogout}>
+                        <i className="ti ti-logout" style={{ fontSize: 13 }} aria-hidden="true" />
+                        Log out
+                    </button>
+                </div>
+
+                {/* ── Personal info ── */}
+                <div className={styles.infoCard}>
+                    <div className={styles.infoCardTitle}>Personal information</div>
+                    <InfoRow icon="ti-id-badge"   label="ID"           value={user.id} />
+                    <InfoRow icon="ti-user"        label="First name"   value={user.first_name} />
+                    <InfoRow icon="ti-user"        label="Last name"    value={user.last_name} />
+                    <InfoRow icon="ti-phone"       label="Phone"        value={user.phone} />
+                </div>
+
+                {/* ── Account info ── */}
+                <div className={styles.infoCard}>
+                    <div className={styles.infoCardTitle}>Account</div>
+                    <InfoRow icon="ti-at"          label="Username"     value={user.username} />
+                    <InfoRow icon="ti-mail"        label="Email"        value={user.email} />
+                    <InfoRow icon="ti-shield"      label="Role"         value={user.user_type} />
+                    <InfoRow icon="ti-calendar"    label="Member since" value={user.created_date} />
+                </div>
+
+            </div>
+        </div>
+    );
 }
